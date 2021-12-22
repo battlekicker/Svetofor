@@ -22,7 +22,12 @@ namespace Svetofor.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            return View(await _context.products.ToListAsync());
+            if (User.Identity.IsAuthenticated)
+            {
+                return View(await _context.products.ToListAsync());
+            }
+            return View("VisitorsIndex", await _context.products.ToListAsync());
+
         }
 
         // GET: Products/Create
